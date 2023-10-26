@@ -1,11 +1,18 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const commentsSchema = mongoose.Schema({
     content: String,
-    createdAt: Date,
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+    },
     post: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Posts
+        ref: "Posts"
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Users"
     }
 })
 

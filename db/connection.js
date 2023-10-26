@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const URL = "localhost:27017"
+const URL = "mongodb://127.0.0.1:27017/"
 
 const cxn = async () => {
     try{
