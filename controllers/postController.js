@@ -45,7 +45,10 @@ const updatePost = async (req, res) => {
         post.title = newPost.title;
         post.content = newPost.content;
         await post.save();
-        return res.status(200).json({msg: "Editado correctamente"})
+        return res.status(200).json({
+            msg: "Editado correctamente",
+            post
+        })
     }catch(e){
         console.log(e)
         return res.status(500).json({msg: e})
