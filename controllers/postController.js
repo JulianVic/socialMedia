@@ -8,8 +8,9 @@ const createPost = async(req, res) => {
             content: "Hace no mucho linux quebró",
             user: userID
         }
-
-        const post = await Posts.create(posteo)
+        
+        const post = await Posts.create(posteo);
+        
         await post.save();
         return res.status(200).json({post})
     }catch(e){

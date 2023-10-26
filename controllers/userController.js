@@ -23,8 +23,28 @@ const readUsers = async (req, res ) => {
     }
 }
 
+const searchUser = async (req, res) => {
+    const { email } = req.body;
+
+    try{
+
+        const user = await Users.findOne({ email: email })
+        if(!user) return res.status(404).json({
+            msg: "User not found"
+        })
+        return res.status(200).json(user);
+
+    }catch(e){
+        console.log(e);
+        return res.status(500).json({
+            msg: e
+        })
+    }
+}
+
 
 export default {
     createUser,
-    readUsers
+    readUsers,
+    searchUser
 }
