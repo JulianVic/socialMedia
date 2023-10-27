@@ -13,9 +13,9 @@ const createPost = async(req, res) => {
         
         await post.save();
         return res.status(200).json({post})
-    }catch(e){
-        console.log(e);
-        return res.status(500).json({e})
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({error})
     }
 }
 
@@ -26,9 +26,9 @@ const readPosts = async (req, res ) => {
         const posts = await Posts.find({ user: userID });
         if(posts.length === 0) return res.status(404).json({msg: "No se han encontrado publicaciones"}); 
         return res.status(200).json({ posts })
-    }catch(e){
-        console.log(e);
-        return res.status(500).json({e})
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({error})
     }
 }
 
@@ -47,26 +47,33 @@ const updatePost = async (req, res) => {
         post.content = newPost.content;
         await post.save();
         return res.status(200).json({msg: "Editado correctamente"})
-    }catch(e){
-        console.log(e)
-        return res.status(500).json({msg: e})
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({msg: error})
     }
 }
 
 const deletePost = async (req, res) => {
-    const { postID } = req.params;
+    try {
+        const { fecha } = req.body; // Obtén la fecha del cuerpo de la solicitud en formato "27/10/2023"
 
-    try{
+        if (!fecha) {
+            return res.status(400).json({ msg: "Debes proporcionar la fecha para eliminar el post." });
+        }
 
-        const post = await Posts.findById(postID);
-        if(!post) return res.status(404).json({msg: "Publicación no encontrada"})
-        await Posts.findByIdAndDelete(postID);
-        return res.status(200).json({msg: "Eliminado correctamente"})
-    }catch(e){
-        console.log(e)
-        return res.status(500).json({msg: e})
+        const post = await Posts.find({createdAt: fecha })
+                
+        if (!post) return res.status(404).json({ msg: "No se encontró el post." });
+
+        await Posts.deleteOne({createdAt: fecha });
+        
+        return res.status(200).json({ msg: "Post eliminado exitosamente" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: error.message });
     }
 }
+
 
 export default {
     createPost,
