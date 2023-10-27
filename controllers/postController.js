@@ -54,8 +54,8 @@ const updatePost = async (req, res) => {
 }
 
 const deletePost = async (req, res) => {
+    const { fecha } = req.body; // Obtén la fecha del cuerpo de la solicitud en formato "27/10/2023"
     try {
-        const { fecha } = req.body; // Obtén la fecha del cuerpo de la solicitud en formato "27/10/2023"
 
         if (!fecha) {
             return res.status(400).json({ msg: "Debes proporcionar la fecha para eliminar el post." });
@@ -66,7 +66,7 @@ const deletePost = async (req, res) => {
         if (!post) return res.status(404).json({ msg: "No se encontró el post." });
 
         await Posts.deleteOne({createdAt: fecha });
-        
+
         return res.status(200).json({ msg: "Post eliminado exitosamente" });
     } catch (error) {
         console.log(error);
