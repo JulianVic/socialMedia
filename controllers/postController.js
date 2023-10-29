@@ -54,7 +54,7 @@ const updatePost = async (req, res) => {
 }
 
 const deletePost = async (req, res) => {
-    const { fecha } = req.body; // Obtén la fecha del cuerpo de la solicitud en formato "27/10/2023"
+    const { fecha } = req.body; // Obtén la fecha del cuerpo de la solicitud en formato "2023-10-27T06:42:16.260Z"
     try {
 
         if (!fecha) {
